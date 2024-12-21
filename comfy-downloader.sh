@@ -36,18 +36,18 @@ install_custom_nodes() {
     echo "Installing custom nodes..."
     
     # ReActor Node
-    git clone https://github.com/Gourieff/comfyui-reactor-node.git "$CUSTOM_NODES_DIR/comfyui-reactor-node"
+    git clone https://github.com/Gourieff/comfyui-reactor-node.git "$CUSTOM_NODES_DIR/comfyui-reactor-node" || echo "Failed to clone ReActor Node"
     
     # Prompt Composer Node
-    git clone https://github.com/theUpsider/ComfyUI-Prompt-Composer.git "$CUSTOM_NODES_DIR/ComfyUI-Prompt-Composer"
+    git clone https://github.com/theUpsider/ComfyUI-Prompt-Composer.git "$CUSTOM_NODES_DIR/ComfyUI-Prompt-Composer" || echo "Failed to clone Prompt Composer"
     
     # Runtime Node
-    git clone https://github.com/runtime-assignments/runtime44-comfy.git "$CUSTOM_NODES_DIR/runtime44-comfy"
+    git clone https://github.com/runtime-assignments/runtime44-comfy.git "$CUSTOM_NODES_DIR/runtime44-comfy" || echo "Failed to clone Runtime Node"
 
     # Install python dependencies for custom nodes
     if [ -f "$COMFY_ROOT/venv/bin/activate" ]; then
         source "$COMFY_ROOT/venv/bin/activate"
-        pip install -r "$CUSTOM_NODES_DIR/comfyui-reactor-node/requirements.txt"
+        pip install -r "$CUSTOM_NODES_DIR/comfyui-reactor-node/requirements.txt" || echo "Failed to install ReActor requirements"
         deactivate
     else
         echo "Virtual environment not found. Please install dependencies manually."
@@ -97,7 +97,7 @@ main() {
     if ! command -v git &> /dev/null; then
         echo "Git is not installed. Please install git first."
         exit 1
-    }
+    fi
     
     # Create directories
     create_directories
